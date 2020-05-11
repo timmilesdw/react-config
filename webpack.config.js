@@ -8,14 +8,14 @@ const AsyncChunkNames = require('webpack-async-chunk-names-plugin')
 
 module.exports = {
     devtool: 'source-map',
-    entry: "./src/index.jsx",
+    entry: "./src/index.tsx",
     output: {
         path: path.join(__dirname, "/dist"),
         filename: "bundle.js",
         chunkFilename: '[name].js',
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
       },
       optimization: {
         splitChunks: {
@@ -52,31 +52,37 @@ module.exports = {
     },
     module: {
         rules: [{
-            test: /\.jsx?$/,
-            exclude: /node_modules/,
-            use: {
-                loader: 'babel-loader',
-                options: {
-                    presets: ['@babel/preset-react']
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-react']
+                    }
                 }
-            }
-        }, {
-            test: /\.css$/,
-            use: ExtractTextPlugin.extract(
-                {
-                    fallback: 'style-loader',
-                    use: ['css-loader']
-                }
-            )
-        },
-        {
-            test: /\.(png|jpg|gif)$/,
-            use: [
-                {
-                    loader: 'file-loader'
-                }
-            ]
-        }
+            }, 
+            {
+                test: /\.css$/,
+                use: ExtractTextPlugin.extract(
+                    {
+                        fallback: 'style-loader',
+                        use: ['css-loader']
+                    }
+                )
+            },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader'
+                    }
+                ]
+            },
+            {
+                test: /\.(ts|tsx)$/,
+                loader: 'ts-loader'
+            },
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
         ]
     },
     plugins: [

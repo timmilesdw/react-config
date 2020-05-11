@@ -21,6 +21,13 @@
         "ecmaVersion": 11,
         "sourceType": "module"
     },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    },
     "plugins": [
         "react",
         "fp",
